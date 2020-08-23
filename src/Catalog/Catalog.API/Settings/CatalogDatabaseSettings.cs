@@ -8,3 +8,4 @@
 
         public string CollectionName { get; set; }
     }
+}
