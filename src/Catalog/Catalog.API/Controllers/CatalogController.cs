@@ -62,5 +62,19 @@ namespace Catalog.API.Controllers
             return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
         }
 
+        [HttpPut]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product product)
+        {
+            return Ok(await _repository.Update(product));
+        }
+
+        [HttpDelete("{id:length(24)}")]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> DeleteProduct(string id)
+        {
+            return Ok(await _repository.Delete(id));
+        }
+
     }
 }
