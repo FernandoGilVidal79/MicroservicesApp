@@ -30,7 +30,7 @@ namespace Catalog.API.Controllers
             return Ok(products);
         }
 
-        [HttpGet]
+        [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType( (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> GetProductById(string id)
@@ -53,5 +53,14 @@ namespace Catalog.API.Controllers
             var products = await _repository.GetProductByCategory(categoryName);
             return Ok(products);
         }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
+        {
+            await _repository.Create(product);
+            return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
+        }
+
     }
 }
