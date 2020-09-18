@@ -39,9 +39,10 @@ namespace Catalog.API.Controllers
 
 
             if (product == null)
+            {
                 _logger.LogError($"Product with Id: {id} not found.");
                 return NotFound();
-
+            }
             return Ok(product);
         }
 
