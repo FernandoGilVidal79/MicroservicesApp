@@ -11,7 +11,6 @@ namespace Basket.API.Entities
 
         public decimal TotalPrice { get; set; }
 
-
         // BillingAddress
         public string FirstName { get; set; }
         public string LastName { get; set; }
