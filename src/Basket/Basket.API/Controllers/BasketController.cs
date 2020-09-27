@@ -27,7 +27,7 @@ namespace Basket.API.Controllers
             return Ok(basket);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(BasketCart), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<BasketCart>> UpdateBasket([FromBody] BasketCart basket)
         {
