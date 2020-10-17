@@ -4,7 +4,7 @@
 
 namespace Ordering.API.Controllers
 {
-    [ApiController
+    [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase 
     {
