@@ -11,31 +11,30 @@ namespace Ordering.Infrastructure.Data
 {
     public class OrderContextSeed
     {
-        public static async Task SeedAsync(OrderContext orderContext, ILoggerFactory loggerFactory, int? retry = 0{)
+        public static async Task SeedAsync(OrderContext orderContext, ILoggerFactory loggerFactory, int? retry = 0)
         {
-                int retryForAvailability = retry.Value;
-                try
+            int retryForAvailability = retry.Value;
+            try
+            {
+                orderContext.Database.Migrate();
+                if (!orderContext.Orders.Any())
                 {
-                    orderContext.Database.Migrate();
-                    if (!orderContext.Orders.Any())
-                    {
-                        orderContext.Orders.AddRange(GetPreconfiguredOrders());
-                        await orderContext.SaveChangesAsync();
-                    }
-                }
-                catch (Exception exception)
-                {
-                    if (retryForAvailability < 3)
-                    {
-                        retryForAvailability++;
-                        var log = loggerFactory.CreateLogger<OrderContextSeed>();
-                        log.LogError(exception.Message);
-                        await SeedAsync(orderContext, loggerFactory, retryForAvailability);
-
-
-                    }
+                    orderContext.Orders.AddRange(GetPreconfiguredOrders());
+                    await orderContext.SaveChangesAsync();
                 }
             }
+            catch (Exception exception)
+            {
+                if (retryForAvailability < 3)
+                {
+                    retryForAvailability++;
+                    var log = loggerFactory.CreateLogger<OrderContextSeed>();
+                    log.LogError(exception.Message);
+                    await SeedAsync(orderContext, loggerFactory, retryForAvailability);
+
+
+                }
+            }      
         }
 
         private static IEnumerable<Order> GetPreconfiguredOrders()
