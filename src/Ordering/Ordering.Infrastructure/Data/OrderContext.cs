@@ -12,7 +12,6 @@ namespace Ordering.Infrastructure.Data
         {
 
         }
-
         public DbSet<Order> Orders { get; set; }
     }
 }
