@@ -17,7 +17,7 @@ namespace Ordering.API
         {
             
             var host = CreateHostBuilder(args).Build();
-            CreateAndSeedDataBase(host);
+            //CreateAndSeedDataBase(host);
             host.Run();
         }
 
